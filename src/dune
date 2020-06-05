@@ -1,5 +1,5 @@
 (executable
- (name deriv))
+ (name main))
 
 (ocamllex lexer)
 

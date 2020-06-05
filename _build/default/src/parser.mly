@@ -53,3 +53,4 @@ expr:
 	| SQRT; LPAREN; e = expr; RPAREN { Sqrt(e) }
 	| LN; LPAREN; e=expr; RPAREN { Ln(e) }
 	| LOG10; LPAREN; e=expr; RPAREN { Log10(e) }
+	| LPAREN; e = expr; RPAREN { e }
