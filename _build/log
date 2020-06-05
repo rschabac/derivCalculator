@@ -1,0 +1,16 @@
+# dune build deriv.exe
+# OCAMLPARAM: unset
+$ /usr/bin/nproc > /tmp/dune32b536.output 2> /dev/null
+$ /home/rschabac/.opam/4.06.1/bin/ocamlc.opt -config > /tmp/dunef1af37.output
+$ (cd _build/default && /home/rschabac/.opam/4.06.1/bin/ocamldep.opt -modules -impl src/ast.ml) > _build/default/src/.deriv.eobjs/ast.ml.d
+$ (cd _build/default && /home/rschabac/.opam/4.06.1/bin/ocamldep.opt -modules -impl src/deriv.ml) > _build/default/src/.deriv.eobjs/deriv.ml.d
+$ (cd _build/default && /home/rschabac/.opam/4.06.1/bin/ocamldep.opt -modules -impl src/main.ml) > _build/default/src/.deriv.eobjs/main.ml.d
+$ (cd _build/default && /home/rschabac/.opam/4.06.1/bin/ocamlc.opt -w @a-4-29-40-41-42-44-45-48-58-59-60-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I src/.deriv.eobjs -no-alias-deps -opaque -o src/.deriv.eobjs/ast.cmo -c -impl src/ast.ml)
+$ (cd _build/default && /home/rschabac/.opam/4.06.1/bin/ocamlc.opt -w @a-4-29-40-41-42-44-45-48-58-59-60-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I src/.deriv.eobjs -no-alias-deps -opaque -o src/.deriv.eobjs/parser.cmi -c -intf src/parser.mli)
+$ (cd _build/default && /home/rschabac/.opam/4.06.1/bin/ocamlopt.opt -w @a-4-29-40-41-42-44-45-48-58-59-60-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I src/.deriv.eobjs -intf-suffix .ml -no-alias-deps -opaque -o src/.deriv.eobjs/ast.cmx -c -impl src/ast.ml)
+$ (cd _build/default && /home/rschabac/.opam/4.06.1/bin/ocamlc.opt -w @a-4-29-40-41-42-44-45-48-58-59-60-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I src/.deriv.eobjs -no-alias-deps -opaque -o src/.deriv.eobjs/lexer.cmo -c -impl src/lexer.ml)
+$ (cd _build/default && /home/rschabac/.opam/4.06.1/bin/ocamlc.opt -w @a-4-29-40-41-42-44-45-48-58-59-60-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I src/.deriv.eobjs -no-alias-deps -opaque -o src/.deriv.eobjs/deriv.cmo -c -impl src/deriv.ml)
+$ (cd _build/default && /home/rschabac/.opam/4.06.1/bin/ocamlopt.opt -w @a-4-29-40-41-42-44-45-48-58-59-60-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I src/.deriv.eobjs -intf-suffix .ml -no-alias-deps -opaque -o src/.deriv.eobjs/lexer.cmx -c -impl src/lexer.ml)
+$ (cd _build/default && /home/rschabac/.opam/4.06.1/bin/ocamlopt.opt -w @a-4-29-40-41-42-44-45-48-58-59-60-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I src/.deriv.eobjs -intf-suffix .ml -no-alias-deps -opaque -o src/.deriv.eobjs/parser.cmx -c -impl src/parser.ml)
+$ (cd _build/default && /home/rschabac/.opam/4.06.1/bin/ocamlopt.opt -w @a-4-29-40-41-42-44-45-48-58-59-60-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I src/.deriv.eobjs -intf-suffix .ml -no-alias-deps -opaque -o src/.deriv.eobjs/deriv.cmx -c -impl src/deriv.ml)
+$ (cd _build/default && /home/rschabac/.opam/4.06.1/bin/ocamlopt.opt -w @a-4-29-40-41-42-44-45-48-58-59-60-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o src/deriv.exe src/.deriv.eobjs/ast.cmx src/.deriv.eobjs/parser.cmx src/.deriv.eobjs/lexer.cmx src/.deriv.eobjs/deriv.cmx)
