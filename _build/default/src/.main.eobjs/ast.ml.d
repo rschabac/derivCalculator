@@ -1,1 +1,1 @@
-src/ast.ml: Printf String
+src/ast.ml: Char Printf String

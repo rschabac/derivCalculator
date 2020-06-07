@@ -27,12 +27,28 @@ let closeToE (f:float) = abs_float (f -. (exp 1.0)) < e_epsilon
 let pi_epsilon = 0.001
 let closeToPi (f:float) = abs_float (f -. (atan2 0.0 (-1.0))) < pi_epsilon
 
-(*TODO: make string_of_expr use less parentheses
-have differernt functions for different precedence levels
-string_of_expr Add(a,b) should call a mutually recursive function that handles
-printing of things at the next highest precedence level.
-in this function, Adds get parentheses around them
-*)
+let better_string_of_float (f:float) : string =
+	let sprintfString = Printf.sprintf "%f" f in
+	if float_of_string sprintfString = f then Printf.sprintf "%.0f" f else
+	(*This string will have 6 decimal places, I want to
+	remove all trailing zeroes, and the decimal point if it is an integer*)
+	let nonZeroDigit (c:char) : bool =
+		let code = Char.code c in
+		code <= 57 && code >= 49
+	in
+	let len = String.length sprintfString in
+	if nonZeroDigit @@ String.get sprintfString @@ len - 1 then sprintfString else
+	if nonZeroDigit @@ String.get sprintfString @@ len - 2 then String.sub sprintfString 0 @@ len - 1 else
+	if nonZeroDigit @@ String.get sprintfString @@ len - 3 then String.sub sprintfString 0 @@ len - 2 else
+	if nonZeroDigit @@ String.get sprintfString @@ len - 4 then String.sub sprintfString 0 @@ len - 3 else
+	if nonZeroDigit @@ String.get sprintfString @@ len - 5 then String.sub sprintfString 0 @@ len - 4 else
+	if nonZeroDigit @@ String.get sprintfString @@ len - 6 then String.sub sprintfString 0 @@ len - 5 else
+	(* sprintfstring must be something like 4.000000,
+								   and f is 4.0000001
+		In this case, just fall back to sprintfString
+	*)
+	sprintfString
+
 let rec string_of_expr e = string_of_term e
 and string_of_term e = match e with
 | Add(a,b) -> Printf.sprintf "%s + %s" (string_of_term a) (string_of_term b)
@@ -58,14 +74,14 @@ and string_of_uop e = match e with
 | Var c -> String.make 1 c
 | Real r when closeToE r -> "e"
 | Real r when closeToPi r -> "pi"
-| Real r -> Printf.sprintf "%f" r	(*TODO: make custom floatToString function that uses less zeroes*)
+| Real r -> better_string_of_float r
 | _ -> Printf.sprintf "(%s)" (string_of_term e)
 
 let rec fully_parenthesized_string_of_expr e = match e with
 | Var c -> String.make 1 c
 | Real r when closeToE r -> "e"
 | Real r when closeToPi r -> "pi"
-| Real r -> Printf.sprintf "%f" r
+| Real r -> better_string_of_float r
 | Add(a,b) -> Printf.sprintf "(%s)+(%s)" (fully_parenthesized_string_of_expr a) (fully_parenthesized_string_of_expr b)
 | Sub(a,b) -> Printf.sprintf "(%s)-(%s)" (fully_parenthesized_string_of_expr a) (fully_parenthesized_string_of_expr b)
 | Mul(a,b) -> Printf.sprintf "(%s)*(%s)" (fully_parenthesized_string_of_expr a) (fully_parenthesized_string_of_expr b)
