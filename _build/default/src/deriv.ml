@@ -96,6 +96,7 @@ let rec optimizePass (e:expr) :expr * bool = match e with
 	let a', optA = optimizePass a in
 	let b', optB = optimizePass b in
 	Sub(a',b'), optA || optB
+| Mul (Real r1, Real r2) -> Real (r1 *. r2), true
 | Mul (Real 0.0, _) | Mul (_, Real 0.0) -> Real 0.0, true
 | Mul (Real 1.0, e1) | Mul (e1, Real 1.0) -> fst @@ optimizePass e1, true
 | Mul (a,b) ->
@@ -103,11 +104,13 @@ let rec optimizePass (e:expr) :expr * bool = match e with
 	let b', optB = optimizePass b in
 	Mul(a',b'), optA || optB
 (*ignoring division by zero for now*)
+| Div (Real r1, Real r2) -> Real (r1 /. r2), true
 | Div (e1, Real 1.0) -> fst @@ optimizePass e1, true
 | Div (a,b) ->
 	let a', optA = optimizePass a in
 	let b', optB = optimizePass b in
 	Div(a',b'), optA || optB
+| Pow(Real r1, Real r2) -> Real(r1 ** r2), true
 | Pow(e1, Real 1.0) -> fst @@ optimizePass e1, true
 | Pow(_, Real 0.0) -> Real 1.0, true
 | Pow(a,b) ->
